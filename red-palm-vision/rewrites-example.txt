@@ -1,0 +1,6 @@
+Example idea (Cloudflare):
+- Add a catch-all route that rewrites `*` to the app entry.
+- Exact syntax depends on whether you use `routes` rules or `assets` + `serve`.
+
+Because your current `wrangler.jsonc` has only `main`, you’re missing SPA fallback.
+
