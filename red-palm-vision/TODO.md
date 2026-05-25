@@ -1,6 +1,6 @@
-# TODO (frame/security fix)
+# TODO
 
-- [x] Add security headers (CSP frame-ancestors and X-Frame-Options) in `src/server.ts` so the app can’t be framed from mismatched origins.
-- [ ] Re-run dev server and verify console error is gone.
-
+- [ ] Update `red-palm-vision/package.json` start script to point to the `.output` directory.
+- [ ] Verify `package.json` start script works with expected output structure (check existence of `.output/server/index.mjs`).
+- [ ] Optionally run `npm run build` and `npm run start` (or `npm run preview`) to confirm runtime.
 
