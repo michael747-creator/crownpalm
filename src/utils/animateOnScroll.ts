@@ -27,8 +27,11 @@ function initScrollAnimations() {
   });
 }
 
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", initScrollAnimations);
-} else {
-  initScrollAnimations();
+if (typeof window !== "undefined" && typeof document !== "undefined") {
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initScrollAnimations);
+  } else {
+    initScrollAnimations();
+  }
 }
+
