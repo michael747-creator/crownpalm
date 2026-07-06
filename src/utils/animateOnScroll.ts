@@ -1,5 +1,5 @@
 // Intersection Observer for scroll-triggered animations
-document.addEventListener("DOMContentLoaded", () => {
+function initScrollAnimations() {
   const animateOnScroll = (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
@@ -15,16 +15,20 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const observer = new IntersectionObserver(animateOnScroll, {
-    threshold: 0.1, // Trigger when 10% of the element is visible
+    threshold: 0.1,
   });
 
-  // Observe all elements with the animate-on-scroll class
   document.querySelectorAll(".animate-on-scroll").forEach((element) => {
     observer.observe(element);
   });
 
-  // Observe all elements with the zoom-on-scroll class
   document.querySelectorAll(".zoom-on-scroll").forEach((element) => {
     observer.observe(element);
   });
-});
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initScrollAnimations);
+} else {
+  initScrollAnimations();
+}
