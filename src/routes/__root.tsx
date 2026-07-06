@@ -1,3 +1,4 @@
+import "@/utils/animateOnScroll";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet,
@@ -106,7 +107,6 @@ function RootShell({ children }: { children: React.ReactNode }) {
       <body>
         {children}
         <Scripts />
-        <script src="/src/utils/animateOnScroll.ts" type="module" />
       </body>
     </html>
   );
