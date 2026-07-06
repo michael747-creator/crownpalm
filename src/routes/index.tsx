@@ -1,8 +1,10 @@
+import { useEffect, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Phone, Clock, Star, MapPin, Leaf, Award, Truck, ShieldCheck, ArrowRight, MessageCircle } from "lucide-react";
-import heroPalm from "@/assets/hero-palm.jpg";
 import productPour from "@/assets/product-pour.jpg";
 import headerLogo from "@/assets/photo_2026-05-18_17-21-58.jpg";
+import Antigravity from "@/components/Antigravity";
+import RotatingText from "@/components/RotatingText";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -74,25 +76,55 @@ function Header() {
 }
 
 function Hero() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const updateIsMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    updateIsMobile();
+    window.addEventListener("resize", updateIsMobile);
+    return () => window.removeEventListener("resize", updateIsMobile);
+  }, []);
+
+  const particleCount = isMobile ? 80 : 200;
+  const particleSize = isMobile ? 1 : 1.4;
+
   return (
     <section className="relative min-h-screen overflow-hidden bg-hero-gradient grain">
-      <div className="responsive-image-container">
-        <img
-          src={heroPalm}
-          alt="Fresh red palm oil fruits"
-          width={1600}
-          height={1200}
-          className="responsive-image"
-          style={{ maskImage: "linear-gradient(to right, transparent, black 40%)" }}
+      <div className="absolute inset-0 pointer-events-none">
+        <Antigravity
+          count={particleCount}
+          magnetRadius={6}
+          ringRadius={5}
+          waveSpeed={0.4}
+          waveAmplitude={1}
+          particleSize={particleSize}
+          lerpSpeed={0.06}
+          color="#f5a623"
+          autoAnimate={true}
+          particleShape="capsule"
         />
       </div>
-      <div className="relative mx-auto flex min-h-screen max-w-7xl flex-col justify-center px-6 pt-32 pb-20">
+      <div className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col justify-center px-6 pt-32 pb-20">
         <div className="max-w-2xl">
+
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-card/40 px-4 py-1.5 text-xs font-medium uppercase tracking-widest text-accent backdrop-blur animate-on-scroll">
             <span className="h-1.5 w-1.5 rounded-full bg-accent" /> Premium Food Manufacturer
           </div>
           <h1 className="font-serif text-5xl font-bold leading-[1.05] tracking-tight md:text-7xl lg:text-8xl animate-on-scroll">
-            Liquid <span className="text-gold-gradient">Gold</span><br />
+            Liquid <RotatingText
+              texts={["Gold", "Royal", "Pure", "Rare"]}
+              mainClassName="inline-flex text-gold-gradient"
+              staggerFrom="last"
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "-120%" }}
+              staggerDuration={0.025}
+              transition={{ type: "spring", damping: 30, stiffness: 400 }}
+              rotationInterval={2500}
+            /><br />
             from the <span className="italic">Crown</span>.
           </h1>
           <p className="mt-8 max-w-lg text-lg text-muted-foreground md:text-xl animate-on-scroll">
@@ -129,6 +161,7 @@ function Hero() {
     </section>
   );
 }
+
 
 function Trust() {
   const items = [
